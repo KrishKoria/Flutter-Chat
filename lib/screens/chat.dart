@@ -9,25 +9,9 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('FlutterChat'),
         actions: [
-          DropdownButton(
-            icon: const Icon(Icons.more_vert),
-            items: const [
-              DropdownMenuItem(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    Icon(Icons.exit_to_app),
-                    SizedBox(width: 8),
-                    Text('Logout'),
-                  ],
-                ),
-              ),
-            ],
-            onChanged: (itemIdentifier) {
-              if (itemIdentifier == 'logout') {
-                FirebaseAuth.instance.signOut();
-              }
-            },
+          IconButton(
+            onPressed: () => FirebaseAuth.instance.signOut(),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),

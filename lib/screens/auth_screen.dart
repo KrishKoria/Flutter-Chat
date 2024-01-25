@@ -24,24 +24,21 @@ class _AuthScreenState extends State<AuthScreen> {
     // print(_enteredPassword);
     try {
       if (_isLoggingIn) {
-        final userCredentials = await _firebase.signInWithEmailAndPassword(
+        await _firebase.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
       } else {
-        final userCredentials = await _firebase.createUserWithEmailAndPassword(
+        await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
       }
-    } on FirebaseAuthException catch (error) {
-      var message = 'An error occured, please check your credentials!';
-      if (error.message != null) {
-        message = error.message!;
-      }
+    } catch (e) {
       if (!context.mounted) {
         return;
       }
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content:
+              const Text('An error occured, please check your credentials!'),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
