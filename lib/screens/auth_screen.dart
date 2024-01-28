@@ -17,6 +17,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLoggingIn = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  bool _isAuth = false;
   final _formKey = GlobalKey<FormState>();
   File? _pickedImage;
   Future<void> _submitForm() async {
@@ -34,6 +35,9 @@ class _AuthScreenState extends State<AuthScreen> {
     // print(_enteredEmail);
     // print(_enteredPassword);
     try {
+      setState(() {
+        _isAuth = true;
+      });
       if (_isLoggingIn) {
         await _firebase.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
@@ -63,6 +67,9 @@ class _AuthScreenState extends State<AuthScreen> {
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
+      setState(() {
+        _isAuth = false;
+      });
     }
   }
 
@@ -140,34 +147,38 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: 12,
                           ),
-                          ElevatedButton(
-                            onPressed: _submitForm,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                          if (_isAuth)
+                            const CircularProgressIndicator()
+                          else
+                            ElevatedButton(
+                              onPressed: _submitForm,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 8,
+                                ),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                                vertical: 8,
+                              child: Text(!_isLoggingIn ? 'Sign Up' : 'Login'),
+                            ),
+                          if (!_isAuth)
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isLoggingIn = !_isLoggingIn;
+                                });
+                              },
+                              child: Text(
+                                _isLoggingIn
+                                    ? 'Create new account'
+                                    : 'I already have an account, login instead',
                               ),
                             ),
-                            child: Text(!_isLoggingIn ? 'Sign Up' : 'Login'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _isLoggingIn = !_isLoggingIn;
-                              });
-                            },
-                            child: Text(
-                              _isLoggingIn
-                                  ? 'Create new account'
-                                  : 'I already have an account, login instead',
-                            ),
-                          ),
                         ],
                       ),
                     ),
