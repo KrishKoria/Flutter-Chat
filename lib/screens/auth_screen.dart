@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterchat/widgets/image_input.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -76,6 +77,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (!_isLoggingIn) const ImageInput(),
                           TextFormField(
                             decoration:
                                 const InputDecoration(labelText: 'Email'),
