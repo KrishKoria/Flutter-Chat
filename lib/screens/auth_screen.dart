@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterchat/widgets/image_input.dart';
@@ -15,9 +17,16 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
   final _formKey = GlobalKey<FormState>();
+  File? _pickedImage;
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
+    if (!isValid || !_isLoggingIn && _pickedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please Fill the form correctly!'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
       return;
     }
     _formKey.currentState!.save();
@@ -77,7 +86,12 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!_isLoggingIn) const ImageInput(),
+                          if (!_isLoggingIn)
+                            ImageInput(
+                              onSelectImage: (pickedImage) {
+                                _pickedImage = pickedImage;
+                              },
+                            ),
                           TextFormField(
                             decoration:
                                 const InputDecoration(labelText: 'Email'),
