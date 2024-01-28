@@ -18,9 +18,11 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLoggingIn = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _enteredUsername = '';
   bool _isAuth = false;
   final _formKey = GlobalKey<FormState>();
   File? _pickedImage;
+
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid || !_isLoggingIn && _pickedImage == null) {
@@ -57,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .collection('users')
             .doc(userCredentials.user!.uid)
             .set({
-          'username': 'to be done',
+          'username': _enteredUsername,
           'email': _enteredEmail,
           'password': _enteredPassword,
           'imageUrl': url,
@@ -116,6 +118,26 @@ class _AuthScreenState extends State<AuthScreen> {
                             ImageInput(
                               onSelectImage: (pickedImage) {
                                 _pickedImage = pickedImage;
+                              },
+                            ),
+                          if (!_isLoggingIn)
+                            TextFormField(
+                              decoration:
+                                  const InputDecoration(labelText: 'Username'),
+                              keyboardType: TextInputType.name,
+                              autocorrect: false,
+                              textCapitalization: TextCapitalization.none,
+                              enableSuggestions: false,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    value.trim().length < 4) {
+                                  return 'Username must be at least 4 characters long';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _enteredUsername = value!;
                               },
                             ),
                           TextFormField(
