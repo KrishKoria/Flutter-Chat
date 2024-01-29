@@ -18,19 +18,16 @@ class _NewMessageState extends State<NewMessage> {
   }
 
   Future<void> _sendMessage() async {
+    FocusScope.of(context).unfocus();
     if (_newMessageController.text.trim().isEmpty) {
       return;
     }
-
-    FocusScope.of(context).unfocus();
-    _newMessageController.clear();
     final currentUser = FirebaseAuth.instance.currentUser!;
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser.uid)
         .get();
-
-    FirebaseFirestore.instance.collection('chat').add(
+    await FirebaseFirestore.instance.collection('chat').add(
       {
         'text': _newMessageController.text.trim(),
         'createdAt': Timestamp.now(),
@@ -39,6 +36,7 @@ class _NewMessageState extends State<NewMessage> {
         'userImage': userData.data()!['imageUrl'],
       },
     );
+    _newMessageController.clear();
   }
 
   @override
