@@ -14,7 +14,7 @@ class ChatMessages extends StatelessWidget {
           .collection('chat')
           .orderBy(
             'createdAt',
-            descending: false,
+            descending: true,
           )
           .snapshots(),
       builder: (ctx, snapshots) {
