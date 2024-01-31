@@ -36,15 +36,6 @@ This is a Flutter chat app that allows users to communicate with each other in r
     flutter run
     ```
 
-## Screenshots
-
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
-
-## Contributing
-
-Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) to contribute to this project.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
