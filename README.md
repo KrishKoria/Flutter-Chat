@@ -1,16 +1,50 @@
-# flutterchat
+# Flutter Chat App
 
-A new Flutter project.
+This is a Flutter chat app that allows users to communicate with each other in real-time using the google firebase sdk
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- User registration and authentication
+- Real-time messaging
+- User profile management
+- Group chat functionality
+- Push notifications
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repository:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    ```bash
+    git clone https://github.com/KrishKoria/flutterchat.git
+    ```
+
+2. Change to the project directory:
+
+    ```bash
+    cd flutterchat
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    flutter pub get
+    ```
+
+4. Run the app:
+
+    ```bash
+    flutter run
+    ```
+
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot1.png)
+![Screenshot 2](screenshots/screenshot2.png)
+
+## Contributing
+
+Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) to contribute to this project.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
